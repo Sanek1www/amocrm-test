@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use \AmoCRM\Client\AmoCRMApiClient;
@@ -25,7 +27,6 @@ use \AmoCRM\Collections\{
 
 class AmoCRMService
 {
-
     private AmoCRMApiClient $apiClient;
 
     private const CHUNK_SIZE = 50;
@@ -112,6 +113,6 @@ class AmoCRMService
         foreach ($leadsCollection->chunk(self::CHUNK_SIZE) as $collection) {
             $leadsService->update($collection);
         }
-        
+
     }
 }
