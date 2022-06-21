@@ -1,0 +1,23 @@
+<?php
+
+require "./vendor/autoload.php";
+
+
+$apiClient = new \AmoCRM\Client\AmoCRMApiClient(
+    "83975b88-0f4c-4001-8f6f-ce4cef9765f6",
+    "0BbusBZIXeKid4GjJxpkq96td6SpGY1YpJsr0f4HFR1j8P2D6wTOCgKFzDnsXPGx",
+    "https://chernenkoalexandr.amocrm.ru"
+);
+$apiClient->setAccountBaseDomain("chernenkoalexandr.amocrm.ru");
+$authCode = "def50200699c42367e64b9f24c7beee858b5f309adb5155a30877679a811e34d514bf98caad91eb10ab51dbf310e94bc4608751226e5d7b1adf741e1f7ccadfa79979492b2c4e62b972f45d063ef6b20850517e1628017d618051a7bf6a00450bdf3afcfedbd21d8b6debc6f1f4597199e0ea0e40e8a960cb87ce83131fa4efecfe19464065ff4cd1be1f7c9438221aef468e3830eafae0967673a80e91a11bd1de32d0771cac633d53778dbc2031011f2987d3a58b77588e01aa1de61efa4485d6a578553fd73a4ce52cf5a189057e0f2ea16ced6244529750e18ad67bb3b7200e250b98d2e2bd7c9f08db5ef9fd816f03da5884131825887d74c38bc5e0ab9971b292badfb530afff318a5fef3ec12442cbfdd98f30d8bfe11e54119c408fb6d63ff5fd6cbd7537ff8e52fecaabf8d2719db516ed2bdf5e47a6a28acee1079e3628d7cc766eb83774b00b5871fc2630982afb7cfc95e2758a46544b5dccf325ebc4b7363d26dc144f4ad59ea07f27a171eddd971c255dad54f562eac387a6d01c7b1851bdc8ca640466cbd60fed5baf3423eb49f083de6c7e94183ae934761b8cbc7ad9f7d03061eff1297f19d0b717c5d80d39bf96da4c07438603a8c9ea98cc2e45a84b887f256f2d536087ea21898b82d8bab24b1eb53f3d29d027b22060aff476a";
+
+$accessToken = $apiClient->getOAuthClient()->getAccessTokenByCode($authCode);
+
+$apiClient->setAccessToken($accessToken);
+
+
+$amoCRMService = new \App\AmoCRMService($apiClient);
+
+$leadsCollection = $amoCRMService->createThreeRelatedEntities(1000);
+$multiSelectdModel = $amoCRMService->addMultiSelectFieldToLeads();
+$amoCRMService->updateMultiselectValueInLeads($multiSelectdModel);
